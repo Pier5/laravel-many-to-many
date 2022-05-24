@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
 use App\User;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,8 @@ class PostController extends Controller
                 Rule::unique('posts')->ignore($model),
                 'max:100'
             ],
-            // 'category_id'  => 'required|exists:App\Category,id',
-            'description'   => 'required'
+            'category_id'  => 'required|exists:App\Category,id',
+            'description'   => 'required',
         ];
     }
     /**
@@ -66,8 +67,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = \App\Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.create', [
+            'categories'    => $categories,
+            'tags'          => $tags
+        ]);
     }
 
     /**
@@ -83,7 +88,10 @@ class PostController extends Controller
         $formData = $request->all() + [
             'user_id' => Auth::user()->id,
         ];
+        
         $post = Post::create($formData);
+        $post->tags()->attach($formData['tags']);
+
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
@@ -128,8 +136,13 @@ class PostController extends Controller
     {
         if (Auth::user()->id !== $post->user_id) abort(403);
         // $request->validate($this->validationRules);
+    
         $request->validate($this->getValidators($post));
-        $post->update($request->all());
+        $formData = $request->all();
+
+        $post->update($formData);
+        $post->tags()->sync($formData['tags']);
+
         return redirect()->route('admin.posts.show', $post->slug);
     }
 

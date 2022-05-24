@@ -52,6 +52,7 @@
                             <th class="text-center" scope="col">Titolo</th>
                             <th class="text-center" scope="col">Slug</th>
                             <th class="text-center" scope="col">Categoria</th>
+                            <th class="text-center" scope="col">Tags</th>
                             <th class="text-center" scope="col">Data Creazione</th>
                             <th class="text-center" scope="col" colspan="5"></th>
                         </tr>
@@ -63,6 +64,7 @@
                                 <td class="text-center">{{ $post->title }}</td>
                                 <td class="text-center">{{ $post->slug }}</td>
                                 <td class="text-center">{{ $post->category->type }}</td>
+                                <td class="text-center" >{{ $post->tags->pluck('name')->join(' \ ') }}</td>
                                 <td class="text-center">{{ date('d/m/Y', strtotime($post->created_at)) }}</td>
                                 <td>
                                     <a class="btn btn-primary" href="{{ route('admin.posts.show', $post->slug) }}">View</a>

@@ -38,7 +38,19 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Salva</button>
+
+                
+                <fieldset>
+                    <legend>Tags</legend>
+                    @foreach ($tags as $tag)
+                        <input type="checkbox" name="tags[]" id="tag-{{ $tag->id }}" value="{{ $tag->id }}"
+                            @if (in_array($tag->id, old('tags', []))) checked @endif>
+                        <label class="me-4" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                    @endforeach
+                </fieldset>
+
+
+                <button type="submit" class="btn btn-primary mt-4">Salva</button>
             </form>
             <a href="{{ route('admin.home') }}" class="btn btn-dark my-4">Torna alla home</a>
         </div>

@@ -8,7 +8,12 @@ class Tag extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = [
+        'post_id',
+        'name', 
+        'slug'
+    ];
+
     public function posts() {
         return $this->belongsToMany('App\Post');
     }
