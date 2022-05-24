@@ -30,7 +30,7 @@
                     <label for="slug" class="form-label">Slug</label>
                     <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}">                
                 </div>
-                <div class="col-3 mb-3">
+               <div class="col-3 mb-3">
                     <input type="button" value="Genera slug" id="btn-slugger" class="btn btn-primary">
                 </div>
                 <div class="mb-3">
