@@ -9,7 +9,6 @@ class Tag extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'post_id',
         'name', 
         'slug'
     ];

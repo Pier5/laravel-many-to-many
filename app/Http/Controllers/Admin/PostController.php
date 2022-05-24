@@ -25,6 +25,7 @@ class PostController extends Controller
             ],
             'category_id'  => 'required|exists:App\Category,id',
             'description'   => 'required',
+            'tags'          => 'required|exists:App\Tag,id'
         ];
     }
     /**
@@ -88,6 +89,8 @@ class PostController extends Controller
         $formData = $request->all() + [
             'user_id' => Auth::user()->id,
         ];
+
+        
         
         $post = Post::create($formData);
         $post->tags()->attach($formData['tags']);
@@ -104,7 +107,6 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return view('admin.posts.show', compact('post')); 
-        
     }
 
     /**
