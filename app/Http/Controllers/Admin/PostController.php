@@ -90,6 +90,23 @@ class PostController extends Controller
             'user_id' => Auth::user()->id,
         ];
 
+
+
+        // creare nuovi tag nel campo descrizione del create con la #
+        preg_match_all('/#(\S*)/', $formData['description'], $tags_from_content);
+        $tagIds = [];
+        foreach($tags_from_content[1] as $tag) {
+            $newTag = Tag::create([
+                'name'  => $tag,
+                'slug'  => $tag
+            ]);
+
+            $tagIds[] = $newTag->id;
+        }
+        $formData['tags'] = $tagIds;
+        //
+
+        
         $post = Post::create($formData);
         $post->tags()->attach($formData['tags']);
 
