@@ -7,11 +7,6 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-     public function getRouteKeyName()
- {
-     return 'slug';
- }
-
     protected $fillable = [
         'user_id',
         'category_id',
@@ -20,8 +15,10 @@ class Post extends Model
         'slug'
     ];
 
+    
+
     static public function generateSlug($originalStr) {
-        $baseSlug = Str::of($originalStr)->slug('-');
+        $baseSlug = Str::of($originalStr)->slug('-')->__toString();
         $slug = $baseSlug;
         $i = 1;
         while(self::where('slug', $slug)->first()) {

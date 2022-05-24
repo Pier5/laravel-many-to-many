@@ -4,6 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
+const { default: Axios } = require('axios');
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -31,6 +34,21 @@ const app = new Vue({
     el: '#app',
 });
 
+const btnSlugger = document.querySelector('#btn-slugger');
+    if (btnSlugger) {
+        btnSlugger.addEventListener('click', function() {
+            const eleSlug = document.querySelector('#slug');
+            const title = document.querySelector('#title').value;
+
+            Axios.post('/admin/slugger', {
+                originalStr: title,
+            })
+                .then(function (response) {
+                    eleSlug.value = response.data.slug;
+                })
+        });
+    }
+
 
 const confirmationOverlay = document.querySelector('#confirmation-overlay');
 const confirmationForm = confirmationOverlay.querySelector('form');
@@ -49,4 +67,6 @@ if (confirmationOverlay) {
         confirmationForm.action = '';
         confirmationOverlay.classList.add('d-none');
     });
+
+    
 }

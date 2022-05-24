@@ -16,7 +16,7 @@
                     </ul>
                 </div>
             @endif
-            <form method="POST" action="{{ route('admin.posts.store') }}">
+            <form method="post" action="{{ route('admin.posts.store') }}">
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Titolo</label>
@@ -26,9 +26,12 @@
                     <label for="description" class="form-label">Descrizione</label>
                     <textarea class="form-control" name="description" id="description">{{ old('description') }}</textarea>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                     <label for="slug" class="form-label">Slug</label>
                     <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}">                
+                </div>
+                <div class="col-3 mb-3">
+                    <input type="button" value="Genera slug" id="btn-slugger" class="btn btn-primary">
                 </div>
                 <div class="mb-3">
                     <select class="form-select" name="category_id" id="category">
@@ -39,7 +42,7 @@
                     </select>
                 </div>
 
-                
+
                 <fieldset>
                     <legend>Tags</legend>
                     @foreach ($tags as $tag)
