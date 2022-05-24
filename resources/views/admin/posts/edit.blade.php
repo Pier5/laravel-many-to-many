@@ -38,6 +38,14 @@
                         @endforeach
                     </select>
                 </div>
+                <fieldset class="mb-3">
+                    <legend>Tags</legend>
+                    @foreach ($tags as $tag)
+                        <input type="checkbox" name="tags[]" id="tag-{{ $tag->id }}" value="{{ $tag->id }}"
+                            @if (in_array($tag->id, old('tags', $post->tags->pluck('id')->all()))) checked @endif>
+                        <label class="me-4" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                    @endforeach
+                </fieldset>
                 <div class="mb-3">
                     <label for="description" class="form-label">Descrizione</label>
                     <textarea class="form-control" name="description" id="description">{{ $post->description }}</textarea>

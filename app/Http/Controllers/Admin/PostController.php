@@ -90,8 +90,6 @@ class PostController extends Controller
             'user_id' => Auth::user()->id,
         ];
 
-        
-        
         $post = Post::create($formData);
         $post->tags()->attach($formData['tags']);
 
@@ -119,12 +117,12 @@ class PostController extends Controller
     {
         if (Auth::user()->id !== $post->user_id) abort(403);
         $categories = Category::all();
+        $tags = Tag::all();
         return view('admin.posts.edit', [
             'post'          => $post,
-            'categories'    => $categories
-        ]);
-
-        
+            'categories'    => $categories,
+            'tags'          => $tags
+        ]); 
     }
 
     /**
