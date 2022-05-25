@@ -50,6 +50,10 @@ class PostController extends Controller
         }
 
         $posts = $posts->paginate(20);
+        $queries = $request->query();
+        unset($queries['page']);
+        $posts->withPath('?' . http_build_query($queries, '', '&'));
+
         $categories = Category::all();
         $users = User::all();
 
@@ -93,7 +97,7 @@ class PostController extends Controller
 
 
         // creare nuovi tag nel campo descrizione del create con la #
-        preg_match_all('/#(\S*)/', $formData['description'], $tags_from_content);
+        preg_match_all('/#(\S*)\b/', $formData['description'], $tags_from_content);
         $tagIds = [];
         foreach($tags_from_content[1] as $tag) {
             $newTag = Tag::create([
